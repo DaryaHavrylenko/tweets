@@ -16,11 +16,14 @@ export const Image = styled.div`
   width: 308px;
 `;
 export const Wrapper = styled.div`
+  /* position: absolute;
+  top: 0;
+  left: 0; */
   display: flex;
   justify-content: center;
-  padding-left: 36px;
-  padding-right: 36px;
-  padding-top: 28px;
+  padding-left: 16px;
+  padding-right: 16px;
+  /* padding-top: 28px; */
   transition-property: transform;
   transition-duration: 900ms;
   &:hover {
