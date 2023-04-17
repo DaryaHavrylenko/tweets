@@ -5,8 +5,6 @@ export const LogoWrapper = styled.div`
   position: absolute;
   top: 20px;
   left: 20px;
-  /* display: flex;
-  align-items: center; */
 `;
 
 export const LogoImg = styled(Logo)`
