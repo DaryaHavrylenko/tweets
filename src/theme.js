@@ -7,6 +7,7 @@ export const theme = {
   colors: {
     accent: "#5CD3A8",
     background: "#5736A3",
-    buttonColor: "#EBD8FF",
+    buttonBgColor: "#EBD8FF",
+    black: "#373737",
   },
 };

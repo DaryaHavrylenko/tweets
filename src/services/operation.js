@@ -1,9 +1,9 @@
 import axios from "axios";
-
-export const getUsers = async () => {
+const limitPerPage = 9;
+export const getUsers = async (page) => {
   try {
     const { data } = await axios.get(
-      `https://639c400416d1763ab143d324.mockapi.io/users?limit=12&p=1`
+      `https://639c400416d1763ab143d324.mockapi.io/users?page=${page}&limit=${limitPerPage}`
     );
     // console.log(data);
     return data;

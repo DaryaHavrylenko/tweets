@@ -1,50 +1,53 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { LogoCard } from "../Logo/LogoCard";
 import { Hero } from "../Hero/Hero";
 
 export const UsersList = ({ users }) => {
-  return (
-    <GalleryContainer>
-      <Gallery>
-        {users.map((user) => {
-          return (
-            <Item key={user.id}>
-              <LogoCard />
-              <Hero />
-              <RectangleAva>
-                <EllipseAva>
-                  <Avatar
-                    src={user.avatar}
-                    alt={user.name}
-                    width="62"
-                    height="62"
-                    loading="lazy"
-                  ></Avatar>
-                </EllipseAva>
-              </RectangleAva>
-              <TextWrapper>
-                <TextName>{user.name}</TextName>
-                <Text>{user.tweets} tweets</Text>
-                <Text>{user.followers} followers</Text>
-              </TextWrapper>
+  const [isFollowing, setIsFollowing] = useState(false);
 
-              <button type="submit">follow</button>
-            </Item>
-          );
-        })}
-      </Gallery>
-      <button type="submit">load more</button>
-    </GalleryContainer>
+  const handleClick = () => {
+    setIsFollowing(!isFollowing);
+  };
+  const numberWithComma = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  return (
+    <Gallery>
+      {users.map((user) => {
+        const followersWithComma = numberWithComma(user.followers);
+        return (
+          <Item key={user.id}>
+            <LogoCard />
+            <Hero />
+            <RectangleAva>
+              <EllipseAva>
+                <Avatar
+                  src={user.avatar}
+                  alt={user.name}
+                  width="62"
+                  height="62"
+                  loading="lazy"
+                ></Avatar>
+              </EllipseAva>
+            </RectangleAva>
+            <TextWrapper>
+              <TextName>{user.name}</TextName>
+              <Text>{user.tweets} tweets</Text>
+              <Text>{followersWithComma} followers</Text>
+            </TextWrapper>
+            <Button type="button" onClick={() => handleClick(user.id)}>
+              {isFollowing ? "Following" : "Follow"}
+            </Button>
+          </Item>
+        );
+      })}
+    </Gallery>
   );
 };
 
-const GalleryContainer = styled.div`
-  width: 1280px;
-  padding: 52px 24px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-const Gallery = styled.ul`
+export const Gallery = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -55,11 +58,12 @@ const Gallery = styled.ul`
   padding: 0;
   margin: 0;
 `;
-const Item = styled.li`
+export const Item = styled.li`
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 380px;
   height: 460px;
   margin: 5px;
@@ -82,14 +86,11 @@ const Item = styled.li`
     scale: 1.03;
   }
 `;
-const RectangleAva = styled.div`
+export const RectangleAva = styled.div`
   position: relative;
-  /* top: 50%;
-  left: 50%; */
-  /* transform: translate(-50%, -50%); */
   width: 100%;
   height: 8px;
-  background: #ebd8ff;
+  background: ${(p) => p.theme.colors.buttonBgColor};
   box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.06),
     inset 0px -1.71846px 3.43693px #ae7be3, inset 0px 3.43693px 2.5777px #fbf8ff;
 `;
@@ -101,7 +102,7 @@ export const EllipseAva = styled.div`
   transform: translate(-50%, -50%);
   width: 80px;
   height: 80px;
-  background: #ebd8ff;
+  background: ${(p) => p.theme.colors.buttonBgColor};
   box-shadow: 0px 4.39163px 4.39163px rgba(0, 0, 0, 0.06),
     inset 0px -2.19582px 4.39163px #ae7be3,
     inset 0px 4.39163px 3.29372px #fbf8ff;
@@ -112,7 +113,6 @@ export const Avatar = styled.img`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* overflow: hidden; */
   border-radius: 50%;
 `;
 export const TextWrapper = styled.div`
@@ -126,14 +126,40 @@ export const TextWrapper = styled.div`
 export const TextName = styled.p`
   font-family: ${(p) => p.theme.fonts.montserratMedium};
   font-size: 15px;
-  color: #ebd8ff;
+  color: ${(p) => p.theme.colors.buttonBgColor};
   padding-top: 10px;
 `;
-const Text = styled.p`
+export const Text = styled.p`
   font-size: 20px;
   font-family: ${(p) => p.theme.fonts.montserratMedium};
   font-weight: 500;
-  color: #ebd8ff;
+  color: ${(p) => p.theme.colors.buttonBgColor};
   line-height: 24px;
   text-transform: uppercase;
+`;
+export const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 28px;
+  width: 196px;
+  height: 50px;
+  text-transform: uppercase;
+  background: ${(p) => p.theme.colors.buttonBgColor};
+  box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.25);
+  border-radius: 10.3108px;
+  cursor: pointer;
+  font-family: ${(p) => p.theme.fonts.montserratMedium};
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: ${(p) => p.theme.colors.black};
+  transition-property: background-color;
+  transition-duration: 250ms;
+
+  &:hover,
+  &:focus {
+    background-color: ${(p) => p.theme.colors.accent};
+  }
 `;
