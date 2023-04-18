@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-
 import { getUsers } from "../../services/operation";
 import { UsersList } from "../../components/UsersList/UsersList";
 import { Spinner } from "../../components/Spinner/Spinner";
@@ -37,8 +36,8 @@ const Tweets = () => {
       setIsLoading(true);
       try {
         const data = await getUsers(page);
+
         // setUsers((prevState) => (page === 1 ? data : [...prevState, ...data]));
-        // setUsers((prevUsers) => (page === 1 ? data : [...prevUsers, ...data]));
 
         setTotalCount((prevState) =>
           page === 1 ? dataTotalCount - data.length : prevState - data.length

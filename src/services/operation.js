@@ -10,10 +10,11 @@ export const getUsers = async (page) => {
     console.log(error.message);
   }
 };
-// export const followingUser = async (id) => {
+// export const followingUser = async (id, isFollowing) => {
 //   try {
 //     const { data } = await axios.put(
-//       `https://639c400416d1763ab143d324.mockapi.io/users/${id}`
+//       `https://639c400416d1763ab143d324.mockapi.io/users/${id}`,
+//       { isFollowing: !isFollowing }
 //     );
 //     console.log(data);
 //     return data;
