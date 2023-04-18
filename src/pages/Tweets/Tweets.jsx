@@ -12,6 +12,7 @@ const Tweets = () => {
   const [users, setUsers] = useState(
     () => JSON.parse(localStorage.getItem("users")) ?? data
   );
+
   //   const [page, setPage] = useState(1);
   //   const [error, setError] = useState(null);
   //   const [totalCount, setTotalCount] = useState(0);
@@ -33,7 +34,7 @@ const Tweets = () => {
   //       try {
   //         const data = await getUsers(page);
 
-  //         // setUsers((prevState) => (page === 1 ? data : [...prevState, ...data]));
+  //         setUsers((prevState) => (page === 1 ? data : [...prevState, ...data]));
 
   //         setTotalCount((prevState) =>
   //           page === 1 ? dataTotalCount - data.length : prevState - data.length
@@ -71,6 +72,7 @@ const Tweets = () => {
       })
     );
   };
+
   return (
     <GalleryContainer>
       <ButtonGoBack type="button" onClick={handleGoBack}>
