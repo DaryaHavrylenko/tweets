@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+
 import { getUsers } from "../../services/operation";
 import { UsersList } from "../../components/UsersList/UsersList";
 import { Spinner } from "../../components/Spinner/Spinner";
+import data from "../../services/data/user.json";
 // import { followingUser } from "../../services/operation";
 import {
   GalleryContainer,
@@ -12,12 +14,13 @@ import {
 } from "./Tweets.styled";
 
 const Tweets = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(
+    () => JSON.parse(localStorage.getItem("users")) ?? data
+  );
   const [page, setPage] = useState(1);
   const [error, setError] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
-  const [loading, setLoading] = useState(false);
-  //   const [isFollowing, setIsFollowings] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,11 +29,17 @@ const Tweets = () => {
   const goBack = location.state?.from ?? "/";
 
   useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(users));
+  }, [users]);
+
+  useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      setIsLoading(true);
       try {
         const data = await getUsers(page);
-        setUsers((prevUsers) => (page === 1 ? data : [...prevUsers, ...data]));
+        // setUsers((prevState) => (page === 1 ? data : [...prevState, ...data]));
+        // setUsers((prevUsers) => (page === 1 ? data : [...prevUsers, ...data]));
+
         setTotalCount((prevState) =>
           page === 1 ? dataTotalCount - data.length : prevState - data.length
         );
@@ -38,19 +47,11 @@ const Tweets = () => {
       } catch (error) {
         setError(error);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchData();
   }, [error, page]);
-
-  //   useEffect(() => {
-  //     const following = async () => {
-  //       try {
-  //         const user = await followingUser(isFollowers);
-  //       } catch (error) {}
-  //     };
-  //   }, [isFollowers]);
 
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -82,7 +83,7 @@ const Tweets = () => {
       </ButtonGoBack>
       <UsersList users={users} onClick={handleButton} />
       {!!totalCount &&
-        (!loading ? (
+        (!isloading ? (
           <LoadMoreButton type="submit" onClick={loadMore}>
             load more
           </LoadMoreButton>

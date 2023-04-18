@@ -10,15 +10,14 @@ export const getUsers = async (page) => {
     console.log(error.message);
   }
 };
-export const followingUser = async (id, isFollowers) => {
-  try {
-    const { data } = await axios.put(
-      `https://639c400416d1763ab143d324.mockapi.io/users/${id}`,
-      { followers: isFollowers }
-    );
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log(error.message);
-  }
-};
+// export const followingUser = async (id) => {
+//   try {
+//     const { data } = await axios.put(
+//       `https://639c400416d1763ab143d324.mockapi.io/users/${id}`
+//     );
+//     console.log(data);
+//     return data;
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };

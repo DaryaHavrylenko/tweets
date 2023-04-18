@@ -12,7 +12,6 @@ export const Wrapper = styled.div`
   justify-content: center;
   padding-left: 16px;
   padding-right: 16px;
-  /* padding-top: 28px; */
   transition-property: transform;
   transition-duration: 900ms;
   &:hover {
